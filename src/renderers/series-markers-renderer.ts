@@ -8,6 +8,7 @@ import { SeriesItemsIndexesRange, TimedValue } from '../model/time-data';
 import { IPaneRenderer } from './ipane-renderer';
 import { drawArrow, hitTestArrow } from './series-markers-arrow';
 import { drawCircle, hitTestCircle } from './series-markers-circle';
+import { drawOrder, hitTestOrder } from './series-markers-order';
 import { drawSquare, hitTestSquare } from './series-markers-square';
 
 export interface SeriesMarkerRendererDataItem extends TimedValue {
@@ -74,6 +75,12 @@ function drawItem(item: SeriesMarkerRendererDataItem, ctx: CanvasRenderingContex
 		case 'circle':
 			drawCircle(ctx, item.x, item.y, item.color, item.size);
 			return;
+		case 'orderSell':
+			drawOrder(false, ctx, item.x, item.y, item.color, item.size);
+			return;
+		case 'orderBuy':
+			drawOrder(true, ctx, item.x, item.y, item.color, item.size);
+			return;
 		case 'square':
 			drawSquare(ctx, item.x, item.y, item.color, item.size);
 			return;
@@ -90,6 +97,10 @@ function hitTestItem(item: SeriesMarkerRendererDataItem, x: Coordinate, y: Coord
 			return hitTestArrow(false, item.x, item.y, item.size, x, y);
 		case 'circle':
 			return hitTestCircle(item.x, item.y, item.size, x, y);
+		case 'orderSell':
+			return hitTestOrder(true, item.x, item.y, item.size, x, y);
+		case 'orderBuy':
+			return hitTestOrder(false, item.x, item.y, item.size, x, y);
 		case 'square':
 			return hitTestSquare(item.x, item.y, item.size, x , y);
 	}

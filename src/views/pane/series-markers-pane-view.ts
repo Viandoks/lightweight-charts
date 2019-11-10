@@ -59,6 +59,13 @@ function fillSizeAndY(
 			offsets.belowBar += shapeSize + shapeMargin;
 			return;
 		}
+		default: {
+			if (!isNaN(marker.position)) {
+				rendererItem.y = (priceScale.priceToCoordinate(marker.position, firstValue));
+				offsets.belowBar += shapeSize + shapeMargin;
+				return;
+			}
+		}
 	}
 
 	ensureNever(marker.position);
